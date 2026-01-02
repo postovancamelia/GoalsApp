@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register • GoalsApp</title>
+    <style>
+        body{margin:0; font-family:system-ui; min-height:100vh; display:flex; align-items:center; justify-content:center;
+            background: linear-gradient(135deg,#fff1f6,#f2f7ff);}
+        .card{width:min(460px, 92vw); background:#ffffffcc; border:1px solid rgba(255,255,255,.8);
+            border-radius:18px; box-shadow:0 14px 40px rgba(0,0,0,.10); padding:22px; backdrop-filter: blur(10px);}
+        h2{margin:0 0 10px;}
+        .muted{color:#666; margin:0 0 16px; line-height:1.4;}
+        input{width:100%; padding:12px 12px; border-radius:14px; border:1px solid #eee; margin:8px 0;}
+        button{width:100%; padding:12px; border:none; border-radius:14px; font-weight:800; cursor:pointer;
+            background:#6f4cff; color:white; box-shadow:0 10px 22px rgba(111,76,255,.22);}
+        .row{display:flex; justify-content:space-between; margin-top:12px; font-size:14px;}
+        a{color:#ff5fa2; text-decoration:none; font-weight:800;}
+        .msg{padding:10px 12px; border-radius:14px; margin-bottom:10px; background:#fff; border:1px solid #eee; font-size:14px;}
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Create your account ✨</h2>
+    <p class="muted">We’ll store your goals privately under your user.</p>
+
+    <div class="msg" th:if="${error}" th:text="${error}"></div>
+
+    <form method="post" th:action="@{/register}">
+        <input name="username" placeholder="Username" autocomplete="username" />
+        <input name="password" type="password" placeholder="Password" autocomplete="new-password" />
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="row">
+        <span>Already have an account?</span>
+        <a th:href="@{/login}">Login</a>
+    </div>
+</div>
+</body>
+</html>

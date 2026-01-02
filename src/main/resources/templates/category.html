@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'Goals • ' + ${category}">Goals</title>
+    <style>
+        :root{
+            --bg1:#fff1f6; --bg2:#f2f7ff;
+            --card:#ffffffcc;
+            --ink:#2c2c2c;
+            --muted:#6b6b6b;
+            --pink:#ff5fa2;
+            --lav:#6f4cff;
+            --shadow: 0 14px 40px rgba(0,0,0,.10);
+            --radius: 18px;
+        }
+        *{box-sizing:border-box}
+        body{
+            margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            color:var(--ink);
+            min-height:100vh;
+            background: radial-gradient(circle at 20% 10%, var(--bg1), transparent 55%),
+            radial-gradient(circle at 90% 20%, var(--bg2), transparent 55%),
+            linear-gradient(135deg, #fff, #f7f7ff);
+            padding:22px;
+        }
+        .wrap{width:min(980px, 100%); margin:0 auto;}
+        header{
+            display:flex; justify-content:space-between; align-items:center; gap:12px;
+            background: var(--card); border-radius: var(--radius);
+            border:1px solid rgba(255,255,255,.8); box-shadow: var(--shadow);
+            padding: 16px 18px; backdrop-filter: blur(10px);
+        }
+        h1{margin:0; font-size: 22px;}
+        .muted{color:var(--muted);}
+        nav{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0;}
+        .tab{
+            text-decoration:none; font-weight:800; font-size:14px;
+            padding:10px 12px; border-radius: 999px; border:1px solid #eee;
+            background:#fff; color:var(--ink);
+        }
+        .tab.active{background: var(--pink); color:white; border-color:transparent;}
+
+        .grid{display:grid; grid-template-columns: 1fr; gap:16px;}
+        @media (min-width: 900px){ .grid{grid-template-columns: 1fr 1fr;} }
+
+        .card{
+            background: var(--card); border-radius: var(--radius);
+            border:1px solid rgba(255,255,255,.8); box-shadow: var(--shadow);
+            padding: 16px; backdrop-filter: blur(10px);
+        }
+        .full{
+            grid-column: 1 / -1; /* spans both columns */
+        }
+
+        .title{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;}
+        .title h2{margin:0; font-size:18px;}
+
+        .logout button{
+            background:#fff; border:1px solid #eee; border-radius: 999px;
+            padding:10px 12px; font-weight:800; cursor:pointer;
+        }
+        input{
+            width:100%; padding:12px; border-radius: 14px; border:1px solid #eee; margin-top:8px;
+        }
+        button{
+            padding:12px 14px; border-radius: 14px; border:none; cursor:pointer; font-weight:900;
+        }
+        .btn-add{background: var(--lav); color:white; width:100%; margin-top:10px;}
+        .btn-guidance{background: var(--pink); color:white; width:100%; margin-top:12px;}
+        button:disabled{opacity:.55; cursor:not-allowed;}
+
+        ul{margin:0; padding-left: 18px;}
+        li{margin:8px 0; color: #333;}
+
+        .guide{
+            white-space: pre-wrap; background:#fff; border:1px solid #eee;
+            border-radius: 14px; padding:14px; color:#333; line-height:1.55;
+            min-height: 180px;
+        }
+        .badge{
+            padding:6px 10px; border-radius:999px; background:#fff; border:1px solid #eee;
+            font-size:12px; font-weight:800; color:var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+
+    <header>
+        <div>
+            <h1>GoalsApp 💗</h1>
+            <div class="muted">
+                Current category: <span class="badge" th:text="${category}">CATEGORY</span>
+            </div>
+        </div>
+        <form class="logout" method="post" th:action="@{/logout}">
+            <button type="submit">Logout</button>
+        </form>
+    </header>
+
+    <nav>
+        <a class="tab" th:classappend="${category.name() == 'LONG_TERM'} ? ' active' : ''" th:href="@{/goals/LONG_TERM}">🎯 Long-term</a>
+        <a class="tab" th:classappend="${category.name() == 'SHORT_TERM'} ? ' active' : ''" th:href="@{/goals/SHORT_TERM}">📅 Short-term</a>
+        <a class="tab" th:classappend="${category.name() == 'TODO'} ? ' active' : ''" th:href="@{/goals/TODO}">✅ Todos</a>
+        <a class="tab" th:classappend="${category.name() == 'WISH'} ? ' active' : ''" th:href="@{/goals/WISH}">✨ Wish list</a>
+    </nav>
+
+    <div class="grid">
+
+        <!-- LEFT: LIST + guidance button under list -->
+        <div class="card">
+            <div class="title">
+                <h2>Your items</h2>
+                <span class="badge" th:text="${#lists.size(items)} + ' items'">0 items</span>
+            </div>
+
+            <ul>
+                <li th:each="it : ${items}" th:text="${it.text}">item</li>
+                <li th:if="${#lists.isEmpty(items)}" class="muted">No items yet — add your first one ✨</li>
+            </ul>
+
+            <!-- GUIDANCE BUTTON under list -->
+            <form method="post" th:action="@{'/goals/' + ${category} + '/guidance'}">
+                <button class="btn-guidance" type="submit"
+                        th:disabled="${#lists.isEmpty(items)}">
+                    Get guidance 💗
+                </button>
+            </form>
+        </div>
+
+        <!-- RIGHT: ADD FORM -->
+        <div class="card">
+            <div class="title"><h2>Add a new one</h2></div>
+
+            <form method="post" th:action="@{'/goals/' + ${category} + '/add'}">
+                <label class="muted">Write your item</label>
+                <input name="text" placeholder="e.g. Finish my Spring project, save money, learn React..." />
+                <button class="btn-add" type="submit">Add 💜</button>
+            </form>
+
+            <div class="muted" style="margin-top:10px; font-size:13px;">
+                Tip: keep items short and specific ✨
+            </div>
+        </div>
+
+        <!-- FULL-WIDTH GUIDANCE CARD (appears only after clicking) -->
+        <div class="card full" th:if="${guidance}">
+            <div class="title">
+                <h2>Guidance</h2>
+                <span class="badge">based on your list</span>
+            </div>
+            <div class="guide" th:text="${guidance}"></div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

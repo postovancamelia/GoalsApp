@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>GoalsApp</title>
+    <style>
+        :root{
+            --bg1:#fff1f6; --bg2:#f2f7ff;
+            --card:#ffffffcc;
+            --ink:#2c2c2c;
+            --muted:#6b6b6b;
+            --pink:#ff5fa2;
+            --lav:#9b7bff;
+            --mint:#5bd6c6;
+            --shadow: 0 14px 40px rgba(0,0,0,.10);
+            --radius: 18px;
+        }
+        *{box-sizing:border-box}
+        body{
+            margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            color:var(--ink);
+            min-height:100vh;
+            background: radial-gradient(circle at 20% 10%, var(--bg1), transparent 55%),
+            radial-gradient(circle at 90% 20%, var(--bg2), transparent 55%),
+            linear-gradient(135deg, #fff, #f7f7ff);
+            display:flex; align-items:center; justify-content:center;
+            padding:28px;
+        }
+        .wrap{width:min(900px, 100%);}
+        .hero{
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.7);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            padding: 28px;
+            display:grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap:20px;
+            backdrop-filter: blur(10px);
+        }
+        h1{margin:0 0 8px; font-size: 40px; letter-spacing: -0.6px;}
+        .tag{display:inline-flex; gap:8px; align-items:center; font-size:13px; color:var(--muted);}
+        .pill{
+            display:inline-block; padding:6px 10px; border-radius:999px;
+            background: #fff; border:1px solid #eee;
+        }
+        p{margin:12px 0; color:var(--muted); line-height: 1.6;}
+        .cards{display:grid; gap:12px;}
+        .mini{
+            background:#fff; border:1px solid #eee; border-radius: 14px;
+            padding: 12px 14px;
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .mini b{font-size:14px;}
+        .btns{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;}
+        a.btn{
+            text-decoration:none; font-weight:700;
+            padding:12px 16px; border-radius: 14px;
+            border: 1px solid #eee;
+            display:inline-flex; align-items:center; gap:10px;
+            box-shadow: 0 8px 18px rgba(0,0,0,.06);
+        }
+        .primary{background: var(--pink); color:white; border-color: transparent;}
+        .ghost{background:#fff; color:var(--ink);}
+        .sparkle{width:12px; height:12px; border-radius: 3px; background: linear-gradient(135deg, var(--lav), var(--pink));}
+        .right{
+            display:flex; flex-direction:column; justify-content:center;
+            border-left: 1px dashed rgba(0,0,0,.08);
+            padding-left:20px;
+        }
+        @media (max-width: 780px){
+            .hero{grid-template-columns:1fr}
+            .right{border-left:none; padding-left:0; border-top:1px dashed rgba(0,0,0,.08); padding-top:18px;}
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="hero">
+        <div>
+            <div class="tag">
+                <span class="pill">✨ organize</span>
+                <span class="pill">🧠 guidance</span>
+                <span class="pill">✅ progress</span>
+            </div>
+
+            <h1>GoalsApp</h1>
+            <p>
+                A soft, simple place to keep your <b>long-term goals</b>, <b>short-term goals</b>, <b>todos</b>,
+                and your <b>wish list</b> — with a cute “Get guidance” button to help you plan your next steps.
+            </p>
+
+            <div class="btns">
+                <a class="btn primary" th:href="@{/login}">
+                    <span class="sparkle"></span> Login
+                </a>
+                <a class="btn ghost" th:href="@{/register}">
+                    💗 Create account
+                </a>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="cards">
+                <div class="mini"><b>🎯 Long-term</b><span class="pill">milestones</span></div>
+                <div class="mini"><b>📅 Short-term</b><span class="pill">weekly plan</span></div>
+                <div class="mini"><b>✅ Todos</b><span class="pill">priorities</span></div>
+                <div class="mini"><b>✨ Wish list</b><span class="pill">turn into goals</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
