@@ -8,6 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service responsible for managing user goals.
+ *
+ * <p>
+ * Encapsulates business rules related to creating
+ * and retrieving goal items.
+ * </p>
+ */
 @Service
 public class GoalService {
 
@@ -21,6 +29,7 @@ public class GoalService {
         return goalRepo.findByUserAndCategoryOrderByCreatedAtDesc(user, category);
     }
 
+    //TODO: handle exception when empty is sent in the form
     public GoalItem add(User user, Category category, String text) {
         if (text == null || text.trim().isEmpty()) {
             throw new IllegalArgumentException("Text cannot be empty.");

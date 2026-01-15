@@ -3,6 +3,14 @@ package com.goalsapp.entity;
 import jakarta.persistence.*;
 import java.time.Instant;
 
+/**
+ * Represents a single goal item belonging to a user.
+ *
+ * <p>
+ * Each goal item is associated with exactly one user and one category,
+ * and records the creation timestamp.
+ * </p>
+ */
 @Entity
 @Table(name = "goal_items")
 public class GoalItem {

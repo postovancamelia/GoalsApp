@@ -2,6 +2,14 @@ package com.goalsapp.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * Represents an application user.
+ *
+ * <p>
+ * Usernames are stored exactly as provided during registration.
+ * No trimming or normalization is applied.
+ * </p>
+ */
 @Entity
 @Table(name = "users")
 public class User {

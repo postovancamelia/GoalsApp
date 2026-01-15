@@ -15,6 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service responsible for generating guidance messages for user goals.
+ *
+ * <p>
+ * Guidance can be generated either by calling an external AI service
+ * (OpenAI-compatible API) or, when configuration is missing, by returning
+ * a stubbed response for development and testing purposes.
+ * </p>
+ */
 @Service
 public class GuidanceService {
 

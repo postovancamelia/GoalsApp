@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
+/**
+ * Controller responsible for managing goal-related pages and actions.
+ *
+ * <p>
+ * Handles listing goals by category, adding new goals,
+ * and displaying AI-generated guidance.
+ * </p>
+ */
 @Controller
 @RequestMapping("/goals")
 public class GoalsController {
