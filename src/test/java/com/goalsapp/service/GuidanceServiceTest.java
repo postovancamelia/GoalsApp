@@ -25,7 +25,6 @@ class GuidanceServiceTest {
     void getGuidance_returnsStub_whenOpenAiConfigMissing() {
         GuidanceService service = new GuidanceService(goalService, "SYSTEM PROMPT");
 
-        // In Spring these @Value fields default to "" via ${...:}
         ReflectionTestUtils.setField(service, "aiBaseUrl", "");
         ReflectionTestUtils.setField(service, "aiApiKey", "");
 
@@ -51,7 +50,6 @@ class GuidanceServiceTest {
     void extractText_parsesResponsesApiShape() throws Exception {
         GuidanceService service = new GuidanceService(goalService, "SYSTEM");
 
-        // Build a minimal "Responses API" payload that matches extractText()
         Map<String, Object> resp = Map.of(
                 "output", List.of(
                         Map.of(
