@@ -46,7 +46,6 @@ class GoalServiceTest {
         User user = new User("alice", "hash");
         Category category = Category.SHORT_TERM;
 
-        // Return the same entity so we can assert what was passed in
         ArgumentCaptor<GoalItem> captor = ArgumentCaptor.forClass(GoalItem.class);
         when(goalRepo.save(any(GoalItem.class))).thenAnswer(inv -> inv.getArgument(0));
 
@@ -59,7 +58,6 @@ class GoalServiceTest {
         assertThat(toSave.getCategory()).isEqualTo(category);
         assertThat(toSave.getText()).isEqualTo("learn spring");
 
-        // method return is whatever repository saved returned
         assertThat(saved.getText()).isEqualTo("learn spring");
     }
 
